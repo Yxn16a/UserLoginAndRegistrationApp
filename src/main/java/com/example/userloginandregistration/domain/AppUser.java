@@ -1,10 +1,9 @@
-package com.example.userloginandregistration.appuser;
+package com.example.userloginandregistration.domain;
 
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -24,26 +23,23 @@ public class AppUser implements UserDetails {
             allocationSize = 1)
     //@Column(name = "id_1", nullable = false)
     private Long id;
-    private String name;
-    private String userName;
+    private String firstName;
+    private String lastName;
     private String email;
     private String password;
     @Enumerated(EnumType.STRING)
     private AppUserRole appUserRole;
-    private Boolean enabled;
-    private Boolean locked;
+    private Boolean enabled = false;
+    private Boolean locked= false;
 
-    public AppUser(String name, String userName,
+    public AppUser(String firstName, String lastName,
                    String email, String password,
-                   AppUserRole appUserRole,
-                   Boolean enabled, Boolean locked) {
-        this.name = name;
-        this.userName = userName;
+                   AppUserRole appUserRole) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.appUserRole = appUserRole;
-        this.enabled = enabled;
-        this.locked = locked;
     }
 
     @Override
@@ -57,9 +53,16 @@ public class AppUser implements UserDetails {
         return password;
     }
 
+    public String  getlastName(){
+        return lastName;
+    }
+
+    public String  getfirstName(){
+        return firstName;
+    }
     @Override
     public String getUsername() {
-        return userName;
+        return email;
     }
 
     @Override
